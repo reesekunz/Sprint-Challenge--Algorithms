@@ -1,3 +1,15 @@
+
+# You have been given a robot with very basic capabilities:
+
+#   * It can move left or right.
+#   * It can pick up an item
+#   * If it tries to pick up an item while already holding one, it will swap the items instead.
+#   * It can compare the item it's holding to the item in front of it.
+#   * It can switch a light on its head on or off.
+
+# Your task is to program this robot to sort lists using ONLY these abilities.
+
+
 class SortingRobot:
     def __init__(self, l):
         """
@@ -81,11 +93,13 @@ class SortingRobot:
         Turn on the robot's light
         """
         self._light = "ON"
+
     def set_light_off(self):
         """
         Turn off the robot's light
         """
         self._light = "OFF"
+
     def light_is_on(self):
         """
         Returns True if the robot's light is on and False otherwise.
@@ -96,15 +110,32 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # Using a bubble sort to compare pairs of elements
+        # Assuming it needs to pick up an item in order to compare it to another item
+        # Plan on grabbing an item, going over 1 index, and comparing the items
+        # If held item value > number line value (compare item would return 1), continue to the next item
+        # If held item value < number line value (compare item would return -1) leave it as is in the original place and pick up the next item
+        # Continue this process until largest value is bubbled to end, then loop through array with max range length -x since we know thats in the right place already
+        # The robot is currently not holding an item but theres no pick up item function, do we "swap" the very first item so we are holding something to compare the next one to?
+        while True:
+            # for x in range(0, len(l)-1):
+            while self.can_move_right() == True:
+                # for y in range (0, (len(l)-1-x)):
+                if self.compare_item() > -1:
+                    self.move_right()
+                if self.compare_item == -1:
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+            pass
 
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1,
+         45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
 
     robot = SortingRobot(l)
 

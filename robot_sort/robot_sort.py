@@ -1,3 +1,26 @@
+
+#  * It can move left or right.
+#  * It can pick up an item
+#  * If it tries to pick up an item while already holding one, it will swap the items instead.
+#  * It can compare the item it's holding to the item in front of it.
+#  * It can switch a light on its head on or off.
+
+# RULES
+#   * You may use any pre-defined robot methods.
+#   * You may NOT modify any pre-defined robot methods.
+#   * You may use logical operators. (`if`, `and`, `or`, `not`, etc.)
+#   * You may use comparison operators. (`>`, `>=`, `<`, `<=`, `==`, `is`, etc.)
+#   * You may use iterators. (`while`, `for`, `break`, `continue`)
+#   * You may NOT store any variables. (`=`)
+#   * You may NOT access any instance variables directly. (`self._anything`)
+#   * You may NOT use any Python libraries or class methods. (`sorted()`, etc.)
+#   * You may define robot helper methods, as long as they follow all the rules.
+
+# HINTS
+# * We discussed a sorting method this week that might be useful. Which one?
+# * The robot has exactly one bit of memory: its light. Why is this important?
+
+
 class SortingRobot:
     def __init__(self, l):
         """
@@ -81,11 +104,13 @@ class SortingRobot:
         Turn on the robot's light
         """
         self._light = "ON"
+
     def set_light_off(self):
         """
         Turn off the robot's light
         """
         self._light = "OFF"
+
     def light_is_on(self):
         """
         Returns True if the robot's light is on and False otherwise.
@@ -96,15 +121,46 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        self.set_light_on()  # initalize the robots memory with light
+        while self.light_is_on() == True:
+
+            self.set_light_off()  # reset & end inital while loop
+
+            # move as far right as possible
+            while self.can_move_right() == True:
+                self.swap_item()
+                self.move_right()
+                # Compare item being held by robot to current item in list. If held item > current item, swap.
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_on()
+                # Move through the rest of list
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+
+            # move as far left as possible
+            while self.can_move_left() == True:
+                self.swap_item()
+                self.move_left()
+                # Compare item being held by robot to current item in list. If held item < current item, swap.
+                if self.compare_item() == -1:
+                    self.swap_item()
+                    self.set_light_on()
+                # Move through the rest of list
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+
+        return self._list
 
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1,
+         45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
 
     robot = SortingRobot(l)
 
